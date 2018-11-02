@@ -1,36 +1,36 @@
-class Product{
-    constructor(name, price){
+class Task{
+    constructor(name, description){
         this.name = name;
-        this.price = price;
+        this.description = description;
     }
 }
 
 class UI{
-    addProduct(product){
-        const productList = document.getElementById('product-list');
+    addTask(task){
+        const taskList = document.getElementById('task-list');
         const element = document.createElement('div');
         element.innerHTML = `
             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
                 <div class="card-header">
-                    <h4>${product.name}</h4>
+                    <h4>${task.name}</h4>
                 </div>
                 <div class="card-body text-center">                                       
-                    ${product.price}                    
+                    ${task.description}                    
                 </div>
-                <a href="#" class="btn btn-danger" name="delete">Delete</a>
+                <a href="#" class="btn btn-success" name="success">Complete</a>
             </div>
         `;
-        productList.appendChild(element);
+        taskList.appendChild(element);
     }
 
     resetForm(){
-        document.getElementById('product-form').reset();
+        document.getElementById('task-form').reset();
     }
 
-    deleteProduct(element){
-        if (element.name === 'delete') {
+    deleteTask(element){
+        if (element.name === 'success') {
             element.parentElement.parentElement.remove()
-            this.showMessage('Product Deleted Successfully', 'danger');
+            this.showMessage('Task Completed Successfully', 'info');
         }
     }
 
@@ -49,28 +49,28 @@ class UI{
 }
 
 //DOM Events
-document.getElementById('product-form')
+document.getElementById('task-form')
     .addEventListener('submit', function (e) {
         const name = document.getElementById('name').value;        
-        const price = document.getElementById('price').value;
+        const description = document.getElementById('description').value;
 
-        const product = new Product(name, price);        
+        const task = new Task(name, description);        
         
         const ui = new UI();
 
-        if(name === '' || price === ''){
+        if(name === '' || description === ''){
            return ui.showMessage('Complete Form Please', 'info');            
         }
-        ui.addProduct(product);
+        ui.addTask(task);
         ui.resetForm();
 
-        ui.showMessage('Product Added Successfully', 'success');
+        ui.showMessage('Task Added Successfully', 'success');
 
         e.preventDefault();
 })
 
-document.getElementById('product-list')
+document.getElementById('task-list')
     .addEventListener('click', function(e){
     const ui = new UI();
-    ui.deleteProduct(e.target);    
+    ui.deleteTask(e.target);    
 })
